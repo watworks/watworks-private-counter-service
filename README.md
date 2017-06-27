@@ -1,5 +1,7 @@
 # Private Service 1 #
 
+[![Build Status](https://travis-ci.org/watworks/watworks-private-service-1.svg?branch=master)](https://travis-ci.org/watworks/watworks-private-service-1)
+
 > Making infinite loops run faster since 2089!
 
 This service is a PHP app based on the `silex` microframework.  It exposes a tiny api for incrementing numbers.  It's web scale.

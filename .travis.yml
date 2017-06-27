@@ -1,1 +1,13 @@
-# TODO: ... actually make it testable
+sudo: required
+
+services:
+  - docker
+
+language: php
+
+before_install:
+  - make dev-up
+  - make deps
+
+script:
+  - make test
