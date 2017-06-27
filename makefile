@@ -17,7 +17,7 @@ test:
 	docker-compose run app vendor/bin/phpunit
 
 format:
-	docker-compose run app vendor/bin/php-cs-fixer
+	docker-compose run app vendor/bin/php-cs-fixer fix .
 
 build:
 	echo TODO

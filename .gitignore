@@ -2,3 +2,4 @@ vendor/
 dev/
 supervisord.log
 supervisord.pid
+.php_cs.cache
