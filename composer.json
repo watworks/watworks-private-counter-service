@@ -1,0 +1,12 @@
+{
+    "name": "watworks/private-service-1",
+    "description": "An example microservice",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "silex/silex": "~2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    }
+}
