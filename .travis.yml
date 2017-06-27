@@ -7,7 +7,7 @@ language: php
 
 before_install:
   - make dev-up
-  - make deps
+  - make deps-install
 
 script:
   - make test
