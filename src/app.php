@@ -16,7 +16,7 @@ $app['redis.url'] = getenv('REDIS_URL');
 
 // TODO: define core services
 $app['redis'] = function ($app) {
-    $redis = new \Predis\Client($app['redis.url']);
+    return new \Predis\Client($app['redis.url']);
 };
 
 // index route to have *something* to look at

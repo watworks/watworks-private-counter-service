@@ -14,7 +14,7 @@ repl:
 	docker-compose run app vendor/bin/psysh src/app.php
 	
 test:
-	docker-compose run app vendor/bin/phpunit
+	docker-compose run app vendor/bin/phpunit --colors=auto
 
 format:
 	docker-compose run app vendor/bin/php-cs-fixer fix .
