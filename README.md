@@ -12,6 +12,10 @@ A `makefile` serves as the frontend to most of the commands you might need in a 
 
 To get started, run the following commands:
 
-    make dev
+    make dev-up
     make deps-install
     make test
+
+Then edit your code and run your tests, and when you want to shut everything down:
+
+    make dev-down

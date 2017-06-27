@@ -28,7 +28,7 @@ class Test extends TestCase
         $r = $app['redis'];
         $r->set('foo', 'bar');
         $bar = $r->get('foo');
-        $this->assertSame('foo', $bar);
+        $this->assertSame('bar', $bar);
     }
 
     public function testHealthRoute()
