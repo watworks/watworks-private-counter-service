@@ -16,7 +16,7 @@ services:
       - .:/var/app
       - ./dev/logs:/var/log/app
     environment:
-      FOO: hello world
+      REDIS_URL: redis://wat.sock #tcp://127.0.0.1:6379?database=15
   
   # just because
   # redis:

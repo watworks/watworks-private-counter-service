@@ -4,9 +4,15 @@ dev-up:
 dev-down:
 	docker-compose down
 
-deps:
+deps-install:
 	docker-compose run app composer install
 
+deps-update:
+	docker-compose run app composer update
+
+repl:
+	docker-compose run app vendor/bin/psysh src/app.php
+	
 test:
 	docker-compose run app vendor/bin/phpunit
 
@@ -19,4 +25,4 @@ build:
 publish: build
 	echo TODO
 
-.PHONY: dev-up dev-down deps test format build publish
+.PHONY: dev-up dev-down deps-install deps-update repl test format build publish
