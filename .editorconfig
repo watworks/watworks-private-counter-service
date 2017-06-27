@@ -6,3 +6,6 @@ indent_size = 4
 
 [*.{json,yml,xml}]
 indent_size = 2
+
+[makefile,Makefile]
+indent_style = tab

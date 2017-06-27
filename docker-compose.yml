@@ -1,10 +1,23 @@
+# this is for running the dev environment for the project.
 version: '2'
 
 services:
-  nginx:
-    image: nginx:latest
-    ports: 8080:80
+
+  # the app in this project
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile-dev
+    ports:
+      - 8002:80
     volumes:
-      - ./docker/app.nginx.conf:/etc/nginx/conf.d/default.conf
-    volumes_from:
-      - php
+      - ./conf/app.nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./conf/fpm-pool.conf:/etc/php7-fpm/
+      - .:/var/app
+      - ./dev/logs:/var/log/app
+    environment:
+      FOO: hello world
+  
+  # just because
+  # redis:
+  #   image: redis:alpine

@@ -10,6 +10,7 @@ RUN apk --no-cache add php7 php7-fpm php7-mysqli php7-json php7-openssl php7-cur
     php7-mbstring php7-gd nginx \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/main/ \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing/
+RUN ln -s /usr/bin/php7 /usr/local/bin/php
 
 RUN apk --no-cache add supervisor curl
 
@@ -21,6 +22,8 @@ COPY conf/fpm-pool.conf /etc/php7/php-fpm.d/zzz_custom.conf
 COPY conf/php.ini /etc/php7/conf.d/zzz_custom.ini
 
 # TODO: maybe make nginx/php-fpm/php more configurable via env vars?
+
+# TODO (maybe?): fetch & run composer install, but no dev-deps
 
 # create target dirs and copy
 # NOTE: you must have run composer install via the dev environment
