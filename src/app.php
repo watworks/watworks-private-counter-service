@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 // setup app and error handling
 $app = new Application();
-$app->error(function(\Exception $e, $code) {
+$app->error(function (\Exception $e, $code) {
     echo sprintf("App error: %s", $e->getMessage());
 });
 
@@ -15,12 +15,12 @@ $app->error(function(\Exception $e, $code) {
 $app['redis.url'] = getenv('REDIS_URL');
 
 // TODO: define core services
-$app['redis'] = function($app) {
+$app['redis'] = function ($app) {
     $redis = new \Predis\Client($app['redis.url']);
 };
 
 // index route to have *something* to look at
-$app->get("/", function() {
+$app->get("/", function () {
     $str = <<<EOT
     <html>
         <body>
@@ -38,11 +38,11 @@ EOT;
 });
 
 // api routes
-$app->get("/_health", function() {
+$app->get("/_health", function () {
     return new JsonResponse(['status' => 'ok']);
 });
 
-$app->get("/hello", function($app) {
+$app->get("/hello", function ($app) {
     $r = $app['redis'];
     $r->ping();
 
