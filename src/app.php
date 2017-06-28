@@ -40,12 +40,12 @@ $app->get("/_error", function () use ($app) {
     throw new \RuntimeException("testing an error");
 });
 
-$app->get("/swagger.json", function() use ($app) {
+$app->get("/swagger.json", function () use ($app) {
     $str = file_get_contents(__DIR__.'/../docs/swagger.json');
     return new Response($str, 200, ['Content-Type' => 'application/json']);
 });
 
-$notImplemented = function() {
+$notImplemented = function () {
     throw new HttpException(501, "not implemented");
 };
 
