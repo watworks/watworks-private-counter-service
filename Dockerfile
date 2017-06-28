@@ -18,6 +18,7 @@ WORKDIR /var/app
 COPY src/ /var/app/src
 COPY www/ /var/app/www
 COPY vendor/ /var/app/vendor
+COPY docs/ /var/app/docs
 
 # start supervisor & expose ports
 USER root

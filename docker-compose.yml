@@ -20,3 +20,11 @@ services:
   # just because...
   redis:
     image: redis:alpine
+  
+  # cuz why not?
+  docs:
+    image: swaggerapi/swagger-ui
+    ports:
+      - 8003:8080
+    environment:
+      API_URL: "http://localhost:8002/swagger.json"

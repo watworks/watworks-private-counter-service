@@ -4,8 +4,13 @@ dev-up:
 dev-down:
 	docker-compose down
 
+dev-init:
+	make dev-up
+	make deps-install
+
 dev-rebuild: dev-down
 	docker-compose up --build -d
+	make deps-install
 
 deps-install:
 	docker-compose run app composer install

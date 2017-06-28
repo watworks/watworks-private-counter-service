@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Request;
 
 class Test extends TestCase
 {
@@ -9,11 +10,14 @@ class Test extends TestCase
         return require __DIR__.'/../src/app.php';
     }
     
-    private function callApi($method, $path, $headers, $body)
+    private function callApi($method, $path, $headers = [], $body = null)
     {
         $app = $this->loadApp();
-        $req = new Request();
-        return $app->run($req);
+        $req = Request::create($path, $method, [], [], [], [], $body);
+        foreach ($headers as $key => $val) {
+            $req->headers->set($key, $val);
+        }
+        return $app->handle($req);
     }
 
     public function testLoadApp()
@@ -31,17 +35,14 @@ class Test extends TestCase
         $this->assertSame('bar', $bar);
     }
 
-    public function testHealthRoute()
+    public function testDocsRoute()
     {
-        $this->markTestIncomplete();
+        $res = $this->callApi("GET", "/swagger.json");
+        $this->assertSame(200, $res->getStatusCode());
     }
 
-    public function testHelloRoute()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testErrorRoute()
+    // TODO: actually test the counter routes
+    public function testApiRoutes()
     {
         $this->markTestIncomplete();
     }
