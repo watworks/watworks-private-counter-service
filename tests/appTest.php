@@ -85,9 +85,11 @@ class Test extends TestCase
     {
         $this->clearStorage();
 
-        // create a counter - init at 100
-        $res = $this->callApi("PUT", "/counters/foo/100");
+        // create a counter - set it to 100
+        $res = $this->callApi("PUT", "/counters/foo");
         $this->assertSame(201, $res->getStatusCode());
+        $res = $this->callApi("PUT", "/counters/foo/100");
+        $this->assertSame(200, $res->getStatusCode());
         $d = $this->decodeJsonResponse($res);
         $this->assertSame(0, $d['prevValue']);
         $this->assertSame(100, $d['value']);
