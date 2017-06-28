@@ -32,9 +32,18 @@ build:
 	# in the built image
 	docker-compose run app rm -rf vendor/*
 	docker-compose run app composer install --no-dev
-	docker build -t watworks-private-counter-service .
+	docker build -t watworks/watworks-private-counter-service .
 
-publish: build
-	echo TODO
+publish:
+	@if [ ! "$(TAG)" ]; then \
+        echo "TAG was not specified"; \
+        return 1; \
+    fi
+	docker-compose run app rm -rf vendor/*
+	docker-compose run app composer install --no-dev
+	docker build -t watworks/watworks-private-counter-service:$(TAG) .
+	git tag $(TAG)
+	git push origin --tags
+	docker push watworks/watworks-private-counter-service:$(TAG)
 
-.PHONY: dev-up dev-down deps-install deps-update repl test format build publish
+.PHONY: dev-up dev-down dev-init deps-install deps-update repl test format build publish

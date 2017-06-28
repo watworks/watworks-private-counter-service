@@ -1,5 +1,5 @@
 {
-    "name": "watworks/private-service-1",
+    "name": "watworks/private-counter-service",
     "description": "An example microservice",
     "type": "project",
     "license": "MIT",
