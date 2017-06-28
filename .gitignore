@@ -3,3 +3,5 @@ dev/
 supervisord.log
 supervisord.pid
 .php_cs.cache
+*.DS_Store
+
