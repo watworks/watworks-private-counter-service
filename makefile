@@ -13,25 +13,25 @@ dev-rebuild: dev-down
 	make deps-install
 
 deps-install:
-	docker-compose run app composer install
+	docker-compose run --rm app composer install
 
 deps-update:
-	docker-compose run app composer update
+	docker-compose run --rm app composer update
 
 repl:
-	docker-compose run app vendor/bin/psysh src/app.php
+	docker-compose run --rm app vendor/bin/psysh src/app.php
 	
 test:
-	docker-compose run app vendor/bin/phpunit --colors=auto
+	docker-compose run --rm app vendor/bin/phpunit --colors=auto
 
 format:
-	docker-compose run app vendor/bin/php-cs-fixer fix .
+	docker-compose run --rm app vendor/bin/php-cs-fixer fix .
 
 build:
 	# force rebuilding deps to ensure only required deps are included
 	# in the built image
-	docker-compose run app rm -rf vendor/*
-	docker-compose run app composer install --no-dev
+	docker-compose run --rm app rm -rf vendor/*
+	docker-compose run --rm app composer install --no-dev
 	docker build -t watworks/watworks-private-counter-service .
 
 publish:
@@ -39,8 +39,8 @@ publish:
         echo "TAG was not specified"; \
         return 1; \
     fi
-	docker-compose run app rm -rf vendor/*
-	docker-compose run app composer install --no-dev
+	docker-compose run --rm app rm -rf vendor/*
+	docker-compose run --rm app composer install --no-dev
 	docker build -t watworks/watworks-private-counter-service:$(TAG) .
 	git tag $(TAG)
 	git push origin --tags
