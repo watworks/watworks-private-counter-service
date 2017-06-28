@@ -7,5 +7,13 @@ before_install:
   - make dev-up
   - make deps-install
 
+notifications:
+  slack:
+    secure: icHvR9eAP7srLbcOGaHGhRQufV9PnWiS7xXGR/1LhIWjsAFFGDiobPOy+OsNE727sxGy7tbdeeT5e+WPaJU73cQp58CMxlW63OBexNARkor2OzpvCR8RRHI6oTMkCUg93aCvdQf/Ktu4p1XQvft+z
+sk/Za2XfmilgH1azMz6Rz7cXYtvDCVWRA7M7JJwKSLiLYHgEejDkrT/29/ieNkblf0F+judjs+v4S/gFyQq4sFWgDkX1TNeM0WW+Ov8+H5mQu0uife8li5QvQJiAb+sjIcns8C5ozTNo6REjyGTj+K
+Ev2iRmhNR2ev3+w24rekH6RqmIQYQihu6h+XCExntOfeSuHu0CdseMT11X2zv9IKfigxd1xCc02A7suBER8RO/2mIR2mHbOlwlGd8/zvh2vNgXlzqnOtF2CU+kBYJsL55Q8PCG2AJRGPxrbmidngqw
+AjAW29Fxd7Yn1hDm3+1ftELerU/tFu8d3FCK+7+efSeYIVZGUckB+uAzbd4VhZZMMU+Yr1x3s7MlS1CtYqF+ewTyNX0+reAV4YNqLHWIUR1CKjTebv0EvGDpQhTesntdb6u8iJtOb7z+6Kj68JcBkN
+ywoLDtKkJANduomaBORj+lu2wmv/o5lNeYhzNRaK/6U1sHXW5Bty1hjjgumP8pv/ENWusP8NQ5KtBJ3CjIEA=
+
 script:
   - make test
