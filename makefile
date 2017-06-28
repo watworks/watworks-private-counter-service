@@ -23,7 +23,11 @@ format:
 	docker-compose run app vendor/bin/php-cs-fixer fix .
 
 build:
-	echo TODO
+	# force rebuilding deps to ensure only required deps are included
+	# in the built image
+	docker-compose run app rm -rf vendor/*
+	docker-compose run app composer install --no-dev
+	docker build -t watworks-private-service-1 .
 
 publish: build
 	echo TODO
