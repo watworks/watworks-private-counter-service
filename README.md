@@ -1,6 +1,6 @@
 # Private Service 1 #
 
-[![Build Status](https://travis-ci.org/watworks/watworks-private-service-1.svg?branch=master)](https://travis-ci.org/watworks/watworks-private-service-1)
+[![Build Status](https://travis-ci.org/watworks/watworks-private-counter-service.svg?branch=master)](https://travis-ci.org/watworks/watworks-private-counter-service)
 
 > Making infinite loops run faster since 2089!
 

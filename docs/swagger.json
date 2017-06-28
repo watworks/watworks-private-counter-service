@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "0.1.0",
-    "title": "watworks-private-service-1",
+    "title": "watworks-private-counter-service",
     "description": "A counter api.\n\nThis api can be used to create *counters* by name, and then perform \nbasic numeric opertaions on them.\n",
     "license": {
       "name": "MIT",
