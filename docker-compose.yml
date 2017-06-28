@@ -7,7 +7,7 @@ services:
   app:
     build:
       context: .
-      dockerfile: dockerfile-dev
+      dockerfile: Dockerfile-dev
     ports:
       - 8002:80
     depends_on:
