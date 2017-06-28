@@ -3,8 +3,6 @@ sudo: required
 services:
   - docker
 
-language: php
-
 before_install:
   - make dev-up
   - make deps-install
