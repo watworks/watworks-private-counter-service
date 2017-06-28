@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class Test extends TestCase
 {
@@ -95,15 +96,23 @@ class Test extends TestCase
         $this->assertSame(100, $d['value']);
 
         // increment it
-        $this->callApi("PUT", "/counters/foo/increment/20");
+        $res = $this->callApi("PUT", "/counters/foo/increment/20");
         $d = $this->decodeJsonResponse($res);
         $this->assertSame(100, $d['prevValue']);
         $this->assertSame(120, $d['value']);
 
-        // decrement(t)
-        $this->callApi("PUT", "/counters/foo/decrement/50");
+        // decrement it
+        $res = $this->callApi("PUT", "/counters/foo/decrement/50");
         $d = $this->decodeJsonResponse($res);
         $this->assertSame(120, $d['prevValue']);
         $this->assertSame(70, $d['value']);
+
+        // set to invalid values - expect validation error
+        $res = $this->callApi("PUT", "/counters/foo/decrement/wat");
+        $this->assertSame(422, $res->getStatusCode());
+        $res = $this->callApi("PUT", "/counters/foo/increment/wat");
+        $this->assertSame(422, $res->getStatusCode());
+        $res = $this->callApi("PUT", "/counters/foo/wat");
+        $this->assertSame(422, $res->getStatusCode());
     }
 }

@@ -17,11 +17,25 @@ $app->error(function (\Exception $e, $code) {
 // set config from environment
 $app['redis.url'] = getenv('REDIS_URL');
 
-// define app services
-
+// define app services & helpers
 $app['redis'] = function ($app) {
     return new \Predis\Client($app['redis.url']);
 };
+
+$app['getKeyOr404'] = $app->protect(function ($key) use ($app) {
+    $r = $app['redis'];
+    if (!$r->exists($key)) {
+        throw new HttpException(404, "not found");
+    }
+    return (double) $r->get($key);
+});
+
+$app['validateOr422'] = $app->protect(function ($num) {
+    if (!is_numeric($num)) {
+        throw new HttpException(422, "number is not a valid numeric format");
+    }
+    return (double) $num;
+});
 
 // index route to have *something* to look at
 // TODO: make this route only conditionally available if this is for local development
@@ -45,16 +59,47 @@ $app->get("/swagger.json", function () use ($app) {
     return new Response($str, 200, ['Content-Type' => 'application/json']);
 });
 
-$notImplemented = function () {
-    throw new HttpException(501, "not implemented");
-};
+$app->get("/counters/{name}", function ($name) use ($app) {
+    $val = $app['getKeyOr404']($name);
+    return $app->json(['value' => $val], 200);
+});
 
-$app->get("/counters/{name}", $notImplemented);
-$app->put("/counters/{name}", $notImplemented);
-$app->delete("/counters/{name}", $notImplemented);
-$app->put("/counters/{name}/increment/{num}", $notImplemented);
-$app->put("/counters/{name}/decrement/{num}", $notImplemented);
-$app->put("/counters/{name}/{num}", $notImplemented);
+$app->put("/counters/{name}", function ($name) use ($app) {
+    $r = $app['redis'];
+    $exists = $r->exists($name);
+    $code = ($exists) ? 200 : 201;
+    if (!$exists) {
+        $r->set($name, (double) 0);
+    }
+    return $app->json(['value' => (double) 0], $code);
+});
+
+$app->delete("/counters/{name}", function ($name) use ($app) {
+    $v = $app['getKeyOr404']($name);
+    $app['redis']->del($name);
+    return new Response(200);
+});
+
+$app->put("/counters/{name}/increment/{num}", function ($name, $num) use ($app) {
+    $v = $app['getKeyOr404']($name);
+    $num = $app['validateOr422']($num);
+    $app['redis']->incrby($name, $num);
+    return $app->json(['value' => $v + $num, 'prevValue' => $v], 200);
+});
+
+$app->put("/counters/{name}/decrement/{num}", function ($name, $num) use ($app) {
+    $v = $app['getKeyOr404']($name);
+    $num = $app['validateOr422']($num);
+    $app['redis']->decrby($name, $num);
+    return $app->json(['value' => $v - $num, 'prevValue' => $v], 200);
+});
+
+$app->put("/counters/{name}/{num}", function ($name, $num) use ($app) {
+    $v = $app['getKeyOr404']($name);
+    $num = $app['validateOr422']($num);
+    $app['redis']->set($name, $num);
+    return $app->json(['value' => $num, 'prevValue' => $v], 200);
+});
 
 // globally enable CORS
 $app['cors-enabled']($app);
